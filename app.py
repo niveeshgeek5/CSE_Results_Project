@@ -32,31 +32,45 @@ with batch23:
 
     grade_order = ["O", "A+", "A", "B+", "B", "C", "U"]
 
-    # Keep only valid subjects
+    # Keep only valid subjects (from mapping)
     subjects = [sub for sub in subject_map.keys() if sub in df.columns]
 
     # Subject-wise grade distribution
     st.header("📚 Subject-wise Grade Distribution")
 
     for subject in subjects:
+        # ✅ Clean subject grades
+        df[subject] = df[subject].fillna("U").astype(str).str.strip()
+        df[subject] = df[subject].apply(lambda g: g if g in grade_order else "U")
+
+        # Count grades
         grade_counts = df[subject].value_counts().reindex(grade_order, fill_value=0)
 
+        # Plot bar chart
         fig, ax = plt.subplots()
         grade_counts.plot(kind="bar", ax=ax)
         ax.set_title(f"{subject} – {subject_map[subject]}")
         ax.set_ylabel("Number of Students")
         st.pyplot(fig)
 
-        # Summary
+        # ✅ Correct Summary
         total = grade_counts.sum()
         fails = grade_counts["U"]
         passes = total - fails
-        st.write(f"*Summary:* {subject} – {subject_map[subject]} → "
-                 f"Pass: {passes}, Fail: {fails}, Most common grade: {grade_counts.idxmax()}")
+        most_common = grade_counts.idxmax()
+
+        st.write(
+            f"**Summary:** {subject} – {subject_map[subject]} → "
+            f"Total: {total}, Pass: {passes}, Fail: {fails}, Most common grade: {most_common}"
+        )
 
     # Pass vs Fail Visualization
     st.header("✅ Pass vs Fail Analysis")
-    df["Result"] = df[subjects].apply(lambda row: "Pass" if "U" not in row.values else "Fail", axis=1)
+
+    # A student fails if ANY subject is U
+    df["Result"] = df[subjects].apply(
+        lambda row: "Pass" if "U" not in row.values else "Fail", axis=1
+    )
     pass_fail_counts = df["Result"].value_counts()
 
     fig, ax = plt.subplots()
@@ -65,8 +79,10 @@ with batch23:
     ax.set_title("Pass vs Fail (Batch 23 - Sem 4)")
     st.pyplot(fig)
 
-    st.write(f"*Summary:* Out of {len(df)} students → "
-             f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
+    st.write(
+        f"**Summary:** Out of {len(df)} students → "
+        f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed."
+    )
 
 # ----------------------
 # Placeholders for other batches
