@@ -13,7 +13,7 @@ df23.replace("UA", "U", inplace=True)
 df24 = pd.read_csv("CSE_Sem2_Batch24.csv")
 df24.replace("UA", "U", inplace=True)
 
-st.title("📊 CSE Department April 2025 Results")
+st.title("📊 CSE Department April-2025 Results")
 
 # Tabs for batches
 batch24, batch23, batch22, batch21 = st.tabs(["Batch 24", "Batch 23", "Batch 22", "Batch 21"])
