@@ -327,7 +327,7 @@ with batch21:
     st.write(f"*Summary:* Out of {len(df21)} students → "
              f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
 with Overall:
-    st.subheader("📊 Overall CSE Department Results - April 2025")
+    st.subheader("🌟 Overall CSE Department Results - April 2025 🌟")
 
     # Function to calculate pass/fail for each batch
     def calculate_results(df, subjects):
@@ -346,19 +346,63 @@ with Overall:
     total_students = total21 + total22 + total23 + total24
     total_pass = pass21 + pass22 + pass23 + pass24
     total_fail = fail21 + fail22 + fail23 + fail24
-
     overall_percentage = (total_pass / total_students) * 100 if total_students > 0 else 0
 
-    # Display results
-    st.write(f"**Total Students:** {total_students}")
-    st.write(f"✅ **Total Passed:** {total_pass}")
-    st.write(f"❌ **Total Failed:** {total_fail}")
-    st.write(f"📈 **Overall Pass Percentage (CSE Department): {overall_percentage:.2f}%**")
+    # --- Animated Glowing Card ---
+    st.markdown(f"""
+    <style>
+    .glow-card {{
+        text-align: center;
+        font-size: 2.2rem;
+        font-weight: bold;
+        padding: 20px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        color: #00ffcc;
+        box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
+        animation: glowPulse 2s infinite alternate;
+    }}
+    @keyframes glowPulse {{
+        from {{ box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; }}
+        to   {{ box-shadow: 0 0 30px #00ffcc, 0 0 60px #00ffcc; }}
+    }}
+    </style>
+    <div class="glow-card">
+        🚀 Overall Pass Percentage: {overall_percentage:.2f}%
+    </div>
+    """, unsafe_allow_html=True)
 
-    # Pie chart
+    st.write(f"**Total Students:** {total_students} | ✅ **Passed:** {total_pass} | ❌ **Failed:** {total_fail}")
+
+    # --- Circular Progress Animation ---
+    st.markdown(f"""
+    <style>
+    .progress-circle {{
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: conic-gradient(#00ff99 {overall_percentage}%, #222 {overall_percentage}%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: white;
+        animation: fillAnim 2s ease-out forwards;
+    }}
+    @keyframes fillAnim {{
+        from {{ background: conic-gradient(#00ff99 0%, #222 0%); }}
+        to   {{ background: conic-gradient(#00ff99 {overall_percentage}%, #222 {overall_percentage}%); }}
+    }}
+    </style>
+    <div class="progress-circle">{overall_percentage:.1f}%</div>
+    """, unsafe_allow_html=True)
+
+    # --- Pie chart for clarity ---
     fig, ax = plt.subplots()
-    ax.pie([total_pass, total_fail], labels=["Pass", "Fail"], autopct="%1.1f%%", colors=["green", "red"])
-    ax.set_title("Overall Pass vs Fail (CSE Department)")
+    ax.pie([total_pass, total_fail], labels=["Pass", "Fail"], autopct="%1.1f%%", colors=["#00ff99", "#ff4444"])
+    ax.set_title("Pass vs Fail (CSE Department)")
     st.pyplot(fig)
 
 with Students_Result_viewer:
