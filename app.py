@@ -327,9 +327,9 @@ with batch21:
     st.write(f"*Summary:* Out of {len(df21)} students → "
              f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
 with Overall:
-    st.subheader("🌟 Overall CSE Department Results - April 2025 🌟")
+    st.subheader("Overall Department Result")
 
-    # Function to calculate pass/fail for each batch
+    # Function to calculate results
     def calculate_results(df, subjects):
         df["Result"] = df[subjects].apply(lambda row: "Pass" if "U" not in row.values else "Fail", axis=1)
         pass_count = df["Result"].value_counts().get("Pass", 0)
@@ -342,66 +342,80 @@ with Overall:
     pass22, fail22, total22 = calculate_results(df22, [sub for sub in subject_map_sem6.keys() if sub in df22.columns])
     pass21, fail21, total21 = calculate_results(df21, [sub for sub in subject_map_sem8.keys() if sub in df21.columns])
 
-    # Combine totals
+    # Totals
     total_students = total21 + total22 + total23 + total24
     total_pass = pass21 + pass22 + pass23 + pass24
     total_fail = fail21 + fail22 + fail23 + fail24
     overall_percentage = (total_pass / total_students) * 100 if total_students > 0 else 0
 
-    # --- Stunning Neon Circular Gauge ---
+    # --- Animated Circular Gauge with Burst Particles ---
     st.markdown(f"""
     <style>
-    .circle-wrapper {{
+    .container {{
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        margin: 30px auto;
+        margin: 40px auto;
     }}
-    .neon-circle {{
-        width: 240px;
-        height: 240px;
+    .circle {{
+        width: 260px;
+        height: 260px;
         border-radius: 50%;
-        background: conic-gradient(#00ffcc 0% {overall_percentage}%, #111 {overall_percentage}% 100%);
+        background: conic-gradient(#00ff88 0% {overall_percentage}%, #111 {overall_percentage}% 100%);
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
-        position: relative;
-        box-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffcc, 0 0 75px #00ffcc;
-        animation: rotateGlow 6s linear infinite;
-        transition: transform 0.4s ease;
+        box-shadow: 0 0 40px #00ff88, 0 0 80px #00ff88, 0 0 120px #00ff88;
+        animation: popIn 1.5s ease-out forwards;
+        overflow: visible;
     }}
-    .neon-circle:hover {{
-        transform: scale(1.08);
-        box-shadow: 0 0 40px #00ffcc, 0 0 80px #00ffcc, 0 0 120px #00ffcc;
-    }}
-    .circle-text {{
-        position: absolute;
-        font-size: 2rem;
+    .percent-text {{
+        font-size: 2.5rem;
         font-weight: bold;
-        color: #ffffff;
-        text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-        animation: shimmer 2s infinite alternate;
+        color: #fff;
+        text-shadow: 0 0 15px #00ff88, 0 0 30px #00ffaa;
+        animation: glowPulse 2s infinite alternate;
     }}
-    @keyframes shimmer {{
-        from {{ color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }}
-        to   {{ color: #00ffff; text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }}
+    @keyframes popIn {{
+        0% {{ transform: scale(0.3); opacity: 0; }}
+        70% {{ transform: scale(1.2); opacity: 1; }}
+        100% {{ transform: scale(1); }}
     }}
-    @keyframes rotateGlow {{
-        from {{ filter: hue-rotate(0deg); }}
-        to   {{ filter: hue-rotate(360deg); }}
+    @keyframes glowPulse {{
+        from {{ text-shadow: 0 0 10px #00ff88; }}
+        to   {{ text-shadow: 0 0 25px #00ffaa, 0 0 50px #00ffaa; }}
+    }}
+    .particle {{
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: #00ff88;
+        border-radius: 50%;
+        animation: shoot 1.2s ease-out forwards;
+    }}
+    @keyframes shoot {{
+        from {{ transform: translate(0,0) scale(1); opacity: 1; }}
+        to   {{ transform: translate(var(--x), var(--y)) scale(0.2); opacity: 0; }}
     }}
     </style>
 
-    <div class="circle-wrapper">
-        <div class="neon-circle">
-            <div class="circle-text">{overall_percentage:.1f}%</div>
+    <div class="container">
+        <div class="circle">
+            <div class="percent-text">{overall_percentage:.1f}%</div>
+            <!-- burst particles -->
+            <div class="particle" style="--x:-120px; --y:-60px;"></div>
+            <div class="particle" style="--x:100px; --y:-80px;"></div>
+            <div class="particle" style="--x:-90px; --y:90px;"></div>
+            <div class="particle" style="--x:120px; --y:100px;"></div>
+            <div class="particle" style="--x:-140px; --y:20px;"></div>
         </div>
-        <p style="color:#eee; font-size:1.1rem; margin-top:15px;">
+        <p style="color:#eee; font-size:1.1rem; margin-top:20px;">
             👥 Total Students: <b>{total_students}</b> | ✅ Passed: <b>{total_pass}</b> | ❌ Failed: <b>{total_fail}</b>
         </p>
     </div>
     """, unsafe_allow_html=True)
+
 
 
 with Students_Result_viewer:
