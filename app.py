@@ -1,69 +1,68 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+
 import streamlit as st
 
-# -------------------------------
-# 🌞 Animated Background Styling
-# -------------------------------
-animated_bg = """
+night_theme = """
 <style>
-/* Smooth animated gradient background */
+/* Dark animated gradient background */
 .stApp {
-  background: linear-gradient(-45deg, #ffecd2, #fcb69f, #ff9a9e, #fad0c4);
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #000000);
   background-size: 400% 400%;
-  animation: gradientBG 20s ease infinite;
+  animation: nightGradient 30s ease infinite;
+  color: #f0f0f0;
 }
-@keyframes gradientBG {
+@keyframes nightGradient {
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
 }
 
-/* Glowing sun */
-.sun {
+/* Glowing moon */
+.moon {
   position: fixed;
-  top: 50px;
-  right: 50px;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, #FFD700 60%, #FFA500 100%);
+  top: 60px;
+  right: 60px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, #fdfdfd 60%, #cfcfcf 100%);
   border-radius: 50%;
-  box-shadow: 0 0 60px #FFD700;
-  animation: rotateSun 25s linear infinite;
+  box-shadow: 0 0 40px #ffffff88;
+  animation: glow 5s ease-in-out infinite alternate;
 }
-@keyframes rotateSun {
-  from {transform: rotate(0deg);}
-  to {transform: rotate(360deg);}
+@keyframes glow {
+  from { box-shadow: 0 0 20px #ffffff55; }
+  to { box-shadow: 0 0 60px #ffffffcc; }
 }
 
-/* Falling sparkles */
-.sparkle {
+/* Twinkling stars */
+.star {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 0, 0.7);
+  width: 3px;
+  height: 3px;
+  background: white;
   border-radius: 50%;
-  animation: fall linear infinite;
+  animation: twinkle 2s infinite alternate;
 }
-@keyframes fall {
-  from {transform: translateY(-10%);}
-  to {transform: translateY(110vh);}
+@keyframes twinkle {
+  from {opacity: 0.2;}
+  to {opacity: 1;}
 }
 </style>
 
-<!-- Place sun -->
-<div class="sun"></div>
+<!-- Add moon -->
+<div class="moon"></div>
 
-<!-- Multiple sparkles -->
-<div class="sparkle" style="left:10%; animation-duration:8s;"></div>
-<div class="sparkle" style="left:25%; animation-duration:12s;"></div>
-<div class="sparkle" style="left:40%; animation-duration:10s;"></div>
-<div class="sparkle" style="left:60%; animation-duration:14s;"></div>
-<div class="sparkle" style="left:80%; animation-duration:9s;"></div>
-<div class="sparkle" style="left:90%; animation-duration:11s;"></div>
+<!-- Stars -->
+<div class="star" style="top:20%; left:15%; animation-delay:0s;"></div>
+<div class="star" style="top:30%; left:40%; animation-delay:1s;"></div>
+<div class="star" style="top:50%; left:70%; animation-delay:0.5s;"></div>
+<div class="star" style="top:65%; left:25%; animation-delay:1.5s;"></div>
+<div class="star" style="top:80%; left:85%; animation-delay:2s;"></div>
 """
-st.markdown(animated_bg, unsafe_allow_html=True)
+st.markdown(night_theme, unsafe_allow_html=True)
+
 
 # ----------------------
 # Load data
