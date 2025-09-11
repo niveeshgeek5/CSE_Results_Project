@@ -58,7 +58,30 @@ classy_night = """
 <div class="orb" style="top:40%; left:40%; width:100px; height:100px; animation-duration:25s;"></div>
 """
 st.markdown(classy_night, unsafe_allow_html=True)
+import matplotlib.pyplot as plt
 
+# Apply a custom dark theme to all matplotlib plots
+plt.style.use("dark_background")
+
+# Customize default color cycle (glowing neon tones)
+plt.rcParams["axes.prop_cycle"] = plt.cycler(color=[
+    "#00FFFF",  # cyan
+    "#FF00FF",  # magenta
+    "#00FF7F",  # spring green
+    "#FFD700",  # gold
+    "#FF4500",  # orange red
+    "#1E90FF"   # dodger blue
+])
+
+# Font and figure styling
+plt.rcParams["figure.facecolor"] = "none"       # transparent (matches bg)
+plt.rcParams["axes.facecolor"] = "none"
+plt.rcParams["savefig.facecolor"] = "none"
+plt.rcParams["axes.edgecolor"] = "#888888"
+plt.rcParams["axes.labelcolor"] = "#e0e0e0"
+plt.rcParams["xtick.color"] = "#aaaaaa"
+plt.rcParams["ytick.color"] = "#aaaaaa"
+plt.rcParams["text.color"]  = "#f0f0f0"
 # ----------------------
 # Load data
 # ----------------------
