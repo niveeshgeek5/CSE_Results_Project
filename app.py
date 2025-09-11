@@ -58,6 +58,7 @@ classy_night = """
 <div class="orb" style="top:40%; left:40%; width:100px; height:100px; animation-duration:25s;"></div>
 """
 st.markdown(classy_night, unsafe_allow_html=True)
+st.markdown("<style>body, .stApp { color: black; }</style>", unsafe_allow_html=True)
 import matplotlib.pyplot as plt
 
 # Apply a custom dark theme to all matplotlib plots
