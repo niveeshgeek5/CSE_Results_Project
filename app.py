@@ -105,7 +105,7 @@ df22.replace("UA", "U", inplace=True)
 st.title("📊 CSE Department April-2025 Results")
 
 # Tabs for batches
-batch24, batch23, batch22, batch21,Overall = st.tabs(["Batch 24", "Batch 23", "Batch 22", "Batch 21","Overall"])
+batch24, batch23, batch22, batch21,Overall, Students Result viewer= st.tabs(["Batch 24", "Batch 23", "Batch 22", "Batch 21","Overall","Students Result viewer"])
 
 # ----------------------
 # Subject mapping
@@ -329,3 +329,7 @@ with batch21:
 with Overall:
     st.subheader("📊 CSE Department April-2025 Results")
     st.info("🔒 Coming soon...")
+with Students Result viewer:
+    st.subheader("Student Result")
+    st.info("🔒 Coming soon")
+ 
