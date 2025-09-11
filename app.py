@@ -13,6 +13,14 @@ df23.replace("UA", "U", inplace=True)
 df24 = pd.read_csv("CSE_Sem2_Batch24.csv")
 df24.replace("UA", "U", inplace=True)
 
+# Batch 21 (Sem 8)
+df21 = pd.read_csv("sem8.csv")
+df21.replace("UA", "U", inplace=True)
+
+# Batch 22 (Sem 6)
+df22 = pd.read_csv("sem6.csv")
+df22.replace("UA", "U", inplace=True)
+
 st.title("📊 CSE Department April-2025 Results")
 
 # Tabs for batches
@@ -55,6 +63,10 @@ subject_map_sem6 = {
     "MX3085": "Well Being with Traditional Practices - Yoga, Ayurveda and Siddha",
     "NM1104": "Speech Recognition Techniques Project: Language Translation via Speech",
     "0EE351": "Renewable Energy System"
+}
+
+subject_map_sem8 = {
+    "CS3811": "Project work/internship"
 }
 
 # Grade order for visualization
@@ -148,10 +160,6 @@ with batch24:
 with batch22:
     st.subheader("Semester 6 Results - Batch 22")
 
-    # Load Semester 6 data
-    df22 = pd.read_csv("sem6.csv")
-    df22.replace("UA", "U", inplace=True)
-
     # Subject-wise grade distribution
     st.header("📚 Subject-wise Grade Distribution")
     
@@ -201,8 +209,4 @@ with batch22:
              f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
 
 # ----------------------
-# Placeholders for other batches
-# ----------------------
-with batch21:
-    st.subheader("Batch 21 Results")
-    st.info("🔒 Coming soon...")
+# Batch 21 (
