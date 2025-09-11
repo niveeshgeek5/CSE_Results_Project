@@ -46,6 +46,17 @@ subject_map_sem2 = {
     "PH3256": "Physics for Information Science"
 }
 
+subject_map_sem6 = {
+    "CCS335": "Cloud Computing",
+    "CCS354": "Network Security",
+    "CCS356": "Object Oriented Software Engineering",
+    "CCS374": "Web Application Security",
+    "CS3691": "Embedded Systems and IoT",
+    "MX3085": "Well Being with Traditional Practices - Yoga, Ayurveda and Siddha",
+    "NM1104": "Speech Recognition Techniques Project: Language Translation via Speech",
+    "0EE351": "Renewable Energy System"
+}
+
 # Grade order for visualization
 grade_order = ["O", "A+", "A", "B+", "B", "C", "U"]
 
@@ -132,12 +143,66 @@ with batch24:
              f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
 
 # ----------------------
-# Placeholders for other batches
+# Batch 22 (Sem 6)
 # ----------------------
 with batch22:
-    st.subheader("Batch 22 Results")
-    st.info("🔒 Coming soon...")
+    st.subheader("Semester 6 Results - Batch 22")
 
+    # Load Semester 6 data
+    df22 = pd.read_csv("sem6.csv")
+    df22.replace("UA", "U", inplace=True)
+
+    # Subject-wise grade distribution
+    st.header("📚 Subject-wise Grade Distribution")
+    
+    # Mapping for Semester 6
+    subject_map_sem6 = {
+        "CCS335": "Cloud Computing",
+        "CCS354": "Network Security",
+        "CCS356": "Object Oriented Software Engineering",
+        "CCS374": "Web Application Security",
+        "CS3691": "Embedded Systems and IoT",
+        "MX3085": "Well Being with Traditional Practices - Yoga, Ayurveda and Siddha",
+        "NM1104": "Speech Recognition Techniques Project: Language Translation via Speech",
+        "0EE351": "Renewable Energy System"
+    }
+    
+    # Keep only valid subjects
+    subjects = [sub for sub in subject_map_sem6.keys() if sub in df22.columns]
+
+    for subject in subjects:
+        grade_counts = df22[subject].value_counts().reindex(grade_order, fill_value=0)
+
+        fig, ax = plt.subplots()
+        grade_counts.plot(kind="bar", ax=ax)
+        ax.set_title(f"{subject} – {subject_map_sem6[subject]}")
+        ax.set_ylabel("Number of Students")
+        st.pyplot(fig)
+
+        # Summary
+        total = grade_counts.sum()
+        fails = grade_counts["U"]
+        passes = total - fails
+        st.write(f"*Summary:* {subject} – {subject_map_sem6[subject]} → "
+                 f"Pass: {passes}, Fail: {fails}, Most common grade: {grade_counts.idxmax()}")
+
+    # Pass vs Fail Visualization
+    st.header("✅ Pass vs Fail Analysis")
+    df22["Result"] = df22[subjects].apply(lambda row: "Pass" if "U" not in row.values else "Fail", axis=1)
+    pass_fail_counts = df22["Result"].value_counts()
+
+    fig, ax = plt.subplots()
+    pass_fail_counts.plot(kind="pie", autopct='%1.1f%%', ax=ax, colors=["green", "red"])
+    ax.set_ylabel("")
+    ax.set_title("Pass vs Fail (Batch 22 - Sem 6)")
+    st.pyplot(fig)
+
+    st.write(f"*Summary:* Out of {len(df22)} students → "
+             f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
+
+# ----------------------
+# Placeholders for other batches
+# ----------------------
 with batch21:
     st.subheader("Batch 21 Results")
     st.info("🔒 Coming soon...")
