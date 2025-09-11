@@ -4,65 +4,60 @@ import matplotlib.pyplot as plt
 
 import streamlit as st
 
-night_theme = """
+classy_night = """
 <style>
-/* Dark animated gradient background */
+/* Smooth animated gradient background */
 .stApp {
-  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #000000);
+  background: linear-gradient(-45deg, #0d1b2a, #1b263b, #415a77, #0f2027);
   background-size: 400% 400%;
-  animation: nightGradient 30s ease infinite;
-  color: #f0f0f0;
+  animation: auroraBG 25s ease infinite;
+  color: #e0e0e0;
 }
-@keyframes nightGradient {
+@keyframes auroraBG {
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
 }
 
-/* Glowing moon */
-.moon {
+/* Soft floating orbs */
+.orb {
   position: fixed;
-  top: 60px;
-  right: 60px;
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle, #fdfdfd 60%, #cfcfcf 100%);
   border-radius: 50%;
-  box-shadow: 0 0 40px #ffffff88;
-  animation: glow 5s ease-in-out infinite alternate;
+  opacity: 0.3;
+  background: radial-gradient(circle, #ffffff33, transparent);
+  animation: floatOrb 20s ease-in-out infinite alternate;
 }
-@keyframes glow {
-  from { box-shadow: 0 0 20px #ffffff55; }
-  to { box-shadow: 0 0 60px #ffffffcc; }
+@keyframes floatOrb {
+  from { transform: translateY(0px) translateX(0px); }
+  to { transform: translateY(-50px) translateX(30px); }
 }
 
-/* Twinkling stars */
-.star {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: white;
-  border-radius: 50%;
-  animation: twinkle 2s infinite alternate;
+/* Aurora wave effect */
+.aurora {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(120deg, #4e54c8aa, #8f94fb55 200px, transparent 400px);
+  mix-blend-mode: screen;
+  animation: wave 15s linear infinite;
 }
-@keyframes twinkle {
-  from {opacity: 0.2;}
-  to {opacity: 1;}
+@keyframes wave {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 0; }
 }
 </style>
 
-<!-- Add moon -->
-<div class="moon"></div>
+<!-- Aurora overlay -->
+<div class="aurora"></div>
 
-<!-- Stars -->
-<div class="star" style="top:20%; left:15%; animation-delay:0s;"></div>
-<div class="star" style="top:30%; left:40%; animation-delay:1s;"></div>
-<div class="star" style="top:50%; left:70%; animation-delay:0.5s;"></div>
-<div class="star" style="top:65%; left:25%; animation-delay:1.5s;"></div>
-<div class="star" style="top:80%; left:85%; animation-delay:2s;"></div>
+<!-- Orbs -->
+<div class="orb" style="top:20%; left:15%; width:150px; height:150px; animation-duration:18s;"></div>
+<div class="orb" style="top:60%; left:70%; width:200px; height:200px; animation-duration:22s;"></div>
+<div class="orb" style="top:40%; left:40%; width:100px; height:100px; animation-duration:25s;"></div>
 """
-st.markdown(night_theme, unsafe_allow_html=True)
-
+st.markdown(classy_night, unsafe_allow_html=True)
 
 # ----------------------
 # Load data
