@@ -348,45 +348,61 @@ with Overall:
     total_fail = fail21 + fail22 + fail23 + fail24
     overall_percentage = (total_pass / total_students) * 100 if total_students > 0 else 0
 
-    # --- Animated Circular Progress Ring (only one chart now) ---
+    # --- Stunning Neon Circular Gauge ---
     st.markdown(f"""
     <style>
-    .progress-container {{
+    .circle-wrapper {{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-top: 20px;
+        margin: 30px auto;
     }}
-    .progress-circle {{
-        width: 220px;
-        height: 220px;
+    .neon-circle {{
+        width: 240px;
+        height: 240px;
         border-radius: 50%;
-        background: conic-gradient(#00ff99 0%, #222 0%);
+        background: conic-gradient(#00ffcc 0% {overall_percentage}%, #111 {overall_percentage}% 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2rem;
-        font-weight: bold;
-        color: white;
-        animation: fillAnim 2s ease-out forwards;
+        position: relative;
+        box-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffcc, 0 0 75px #00ffcc;
+        animation: rotateGlow 6s linear infinite;
+        transition: transform 0.4s ease;
     }}
-    @keyframes fillAnim {{
-        from {{ background: conic-gradient(#00ff99 0%, #222 0%); }}
-        to   {{ background: conic-gradient(#00ff99 {overall_percentage}%, #222 {overall_percentage}%); }}
+    .neon-circle:hover {{
+        transform: scale(1.08);
+        box-shadow: 0 0 40px #00ffcc, 0 0 80px #00ffcc, 0 0 120px #00ffcc;
     }}
     .circle-text {{
         position: absolute;
-        font-size: 1.5rem;
-        color: #00ffcc;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ffffff;
+        text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+        animation: shimmer 2s infinite alternate;
+    }}
+    @keyframes shimmer {{
+        from {{ color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }}
+        to   {{ color: #00ffff; text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }}
+    }}
+    @keyframes rotateGlow {{
+        from {{ filter: hue-rotate(0deg); }}
+        to   {{ filter: hue-rotate(360deg); }}
     }}
     </style>
 
-    <div class="progress-container">
-        <div class="progress-circle">{overall_percentage:.1f}%</div>
-        <p><b>Total Students:</b> {total_students} | ✅ {total_pass} | ❌ {total_fail}</p>
+    <div class="circle-wrapper">
+        <div class="neon-circle">
+            <div class="circle-text">{overall_percentage:.1f}%</div>
+        </div>
+        <p style="color:#eee; font-size:1.1rem; margin-top:15px;">
+            👥 Total Students: <b>{total_students}</b> | ✅ Passed: <b>{total_pass}</b> | ❌ Failed: <b>{total_fail}</b>
+        </p>
     </div>
     """, unsafe_allow_html=True)
+
 
 with Students_Result_viewer:
     st.subheader("Student Result")
