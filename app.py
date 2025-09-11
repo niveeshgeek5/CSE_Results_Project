@@ -348,45 +348,25 @@ with Overall:
     total_fail = fail21 + fail22 + fail23 + fail24
     overall_percentage = (total_pass / total_students) * 100 if total_students > 0 else 0
 
-    # --- Animated Glowing Card ---
+    # --- Animated Circular Progress Ring (only one chart now) ---
     st.markdown(f"""
     <style>
-    .glow-card {{
-        text-align: center;
-        font-size: 2.2rem;
-        font-weight: bold;
-        padding: 20px;
-        border-radius: 15px;
-        background: linear-gradient(135deg, #1a1a2e, #16213e);
-        color: #00ffcc;
-        box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
-        animation: glowPulse 2s infinite alternate;
+    .progress-container {{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
     }}
-    @keyframes glowPulse {{
-        from {{ box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; }}
-        to   {{ box-shadow: 0 0 30px #00ffcc, 0 0 60px #00ffcc; }}
-    }}
-    </style>
-    <div class="glow-card">
-        🚀 Overall Pass Percentage: {overall_percentage:.2f}%
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.write(f"**Total Students:** {total_students} | ✅ **Passed:** {total_pass} | ❌ **Failed:** {total_fail}")
-
-    # --- Circular Progress Animation ---
-    st.markdown(f"""
-    <style>
     .progress-circle {{
-        width: 180px;
-        height: 180px;
+        width: 220px;
+        height: 220px;
         border-radius: 50%;
-        background: conic-gradient(#00ff99 {overall_percentage}%, #222 {overall_percentage}%);
+        background: conic-gradient(#00ff99 0%, #222 0%);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: auto;
-        font-size: 1.8rem;
+        font-size: 2rem;
         font-weight: bold;
         color: white;
         animation: fillAnim 2s ease-out forwards;
@@ -395,15 +375,18 @@ with Overall:
         from {{ background: conic-gradient(#00ff99 0%, #222 0%); }}
         to   {{ background: conic-gradient(#00ff99 {overall_percentage}%, #222 {overall_percentage}%); }}
     }}
+    .circle-text {{
+        position: absolute;
+        font-size: 1.5rem;
+        color: #00ffcc;
+    }}
     </style>
-    <div class="progress-circle">{overall_percentage:.1f}%</div>
-    """, unsafe_allow_html=True)
 
-    # --- Pie chart for clarity ---
-    fig, ax = plt.subplots()
-    ax.pie([total_pass, total_fail], labels=["Pass", "Fail"], autopct="%1.1f%%", colors=["#00ff99", "#ff4444"])
-    ax.set_title("Pass vs Fail (CSE Department)")
-    st.pyplot(fig)
+    <div class="progress-container">
+        <div class="progress-circle">{overall_percentage:.1f}%</div>
+        <p><b>Total Students:</b> {total_students} | ✅ {total_pass} | ❌ {total_fail}</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 with Students_Result_viewer:
     st.subheader("Student Result")
