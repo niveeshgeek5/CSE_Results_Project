@@ -24,7 +24,7 @@ df22.replace("UA", "U", inplace=True)
 st.title("📊 CSE Department April-2025 Results")
 
 # Tabs for batches
-batch24, batch23, batch22, batch21 = st.tabs(["Batch 24", "Batch 23", "Batch 22", "Batch 21"])
+batch24, batch23, batch22, batch21,Overall = st.tabs(["Batch 24", "Batch 23", "Batch 22", "Batch 21","Overall"])
 
 # ----------------------
 # Subject mapping
@@ -245,3 +245,6 @@ with batch21:
 
     st.write(f"*Summary:* Out of {len(df21)} students → "
              f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
+with Overall:
+    st.subheader("📊 CSE Department April-2025 Results")
+    st.info("🔒 Coming soon...")
