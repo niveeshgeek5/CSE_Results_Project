@@ -1,6 +1,69 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import streamlit as st
+
+# -------------------------------
+# 🌞 Animated Background Styling
+# -------------------------------
+animated_bg = """
+<style>
+/* Smooth animated gradient background */
+.stApp {
+  background: linear-gradient(-45deg, #ffecd2, #fcb69f, #ff9a9e, #fad0c4);
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease infinite;
+}
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* Glowing sun */
+.sun {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #FFD700 60%, #FFA500 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 60px #FFD700;
+  animation: rotateSun 25s linear infinite;
+}
+@keyframes rotateSun {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+/* Falling sparkles */
+.sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 0, 0.7);
+  border-radius: 50%;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  from {transform: translateY(-10%);}
+  to {transform: translateY(110vh);}
+}
+</style>
+
+<!-- Place sun -->
+<div class="sun"></div>
+
+<!-- Multiple sparkles -->
+<div class="sparkle" style="left:10%; animation-duration:8s;"></div>
+<div class="sparkle" style="left:25%; animation-duration:12s;"></div>
+<div class="sparkle" style="left:40%; animation-duration:10s;"></div>
+<div class="sparkle" style="left:60%; animation-duration:14s;"></div>
+<div class="sparkle" style="left:80%; animation-duration:9s;"></div>
+<div class="sparkle" style="left:90%; animation-duration:11s;"></div>
+"""
+st.markdown(animated_bg, unsafe_allow_html=True)
 
 # ----------------------
 # Load data
