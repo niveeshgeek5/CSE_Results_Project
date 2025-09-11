@@ -4,60 +4,62 @@ import matplotlib.pyplot as plt
 
 import streamlit as st
 
-classy_night = """
+st.markdown("""
 <style>
-/* Smooth animated gradient background */
+/* Full screen dark night background */
 .stApp {
-  background: linear-gradient(-45deg, #0d1b2a, #1b263b, #415a77, #0f2027);
-  background-size: 400% 400%;
-  animation: auroraBG 25s ease infinite;
-  color: #e0e0e0;
-}
-@keyframes auroraBG {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+    background: radial-gradient(circle at center, #0d0d0d, #000000);
+    overflow: hidden;
+    position: relative;
 }
 
-/* Soft floating orbs */
-.orb {
-  position: fixed;
-  border-radius: 50%;
-  opacity: 0.3;
-  background: radial-gradient(circle, #ffffff33, transparent);
-  animation: floatOrb 20s ease-in-out infinite alternate;
-}
-@keyframes floatOrb {
-  from { transform: translateY(0px) translateX(0px); }
-  to { transform: translateY(-50px) translateX(30px); }
+/* Particle container */
+.particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
 }
 
-/* Aurora wave effect */
-.aurora {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(120deg, #4e54c8aa, #8f94fb55 200px, transparent 400px);
-  mix-blend-mode: screen;
-  animation: wave 15s linear infinite;
+/* Each particle */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.8); /* golden glow */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6),
+                0 0 20px rgba(255, 140, 0, 0.4);
+    animation: explode 8s infinite ease-in-out;
 }
-@keyframes wave {
-  from { background-position: 0 0; }
-  to { background-position: 1000px 0; }
+
+/* Explosion animation */
+@keyframes explode {
+    0% {
+        transform: scale(0.2) translate(0, 0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5) translate(200px, -200px);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(0.2) translate(0, 0);
+        opacity: 0;
+    }
 }
 </style>
 
-<!-- Aurora overlay -->
-<div class="aurora"></div>
-
-<!-- Orbs -->
-<div class="orb" style="top:20%; left:15%; width:150px; height:150px; animation-duration:18s;"></div>
-<div class="orb" style="top:60%; left:70%; width:200px; height:200px; animation-duration:22s;"></div>
-<div class="orb" style="top:40%; left:40%; width:100px; height:100px; animation-duration:25s;"></div>
-"""
-st.markdown(classy_night, unsafe_allow_html=True)
+<div class="particles">
+  <div class="particle" style="width:8px; height:8px; top:20%; left:40%; animation-delay:0s;"></div>
+  <div class="particle" style="width:6px; height:6px; top:50%; left:60%; animation-delay:1s;"></div>
+  <div class="particle" style="width:10px; height:10px; top:70%; left:30%; animation-delay:2s;"></div>
+  <div class="particle" style="width:7px; height:7px; top:80%; left:80%; animation-delay:3s;"></div>
+  <div class="particle" style="width:9px; height:9px; top:40%; left:20%; animation-delay:4s;"></div>
+  <div class="particle" style="width:5px; height:5px; top:60%; left:10%; animation-delay:5s;"></div>
+</div>
+""", unsafe_allow_html=True)
 import matplotlib.pyplot as plt
 
 # Apply a custom dark theme to all matplotlib plots
