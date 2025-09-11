@@ -327,8 +327,40 @@ with batch21:
     st.write(f"*Summary:* Out of {len(df21)} students → "
              f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
 with Overall:
-    st.subheader("📊 CSE Department April-2025 Results")
-    st.info("🔒 Coming soon...")
+    st.subheader("📊 Overall CSE Department Results - April 2025")
+
+    # Function to calculate pass/fail for each batch
+    def calculate_results(df, subjects):
+        df["Result"] = df[subjects].apply(lambda row: "Pass" if "U" not in row.values else "Fail", axis=1)
+        pass_count = df["Result"].value_counts().get("Pass", 0)
+        fail_count = df["Result"].value_counts().get("Fail", 0)
+        return pass_count, fail_count, len(df)
+
+    # Batch-wise results
+    pass23, fail23, total23 = calculate_results(df23, [sub for sub in subject_map_sem4.keys() if sub in df23.columns])
+    pass24, fail24, total24 = calculate_results(df24, [sub for sub in subject_map_sem2.keys() if sub in df24.columns])
+    pass22, fail22, total22 = calculate_results(df22, [sub for sub in subject_map_sem6.keys() if sub in df22.columns])
+    pass21, fail21, total21 = calculate_results(df21, [sub for sub in subject_map_sem8.keys() if sub in df21.columns])
+
+    # Combine totals
+    total_students = total21 + total22 + total23 + total24
+    total_pass = pass21 + pass22 + pass23 + pass24
+    total_fail = fail21 + fail22 + fail23 + fail24
+
+    overall_percentage = (total_pass / total_students) * 100 if total_students > 0 else 0
+
+    # Display results
+    st.write(f"**Total Students:** {total_students}")
+    st.write(f"✅ **Total Passed:** {total_pass}")
+    st.write(f"❌ **Total Failed:** {total_fail}")
+    st.write(f"📈 **Overall Pass Percentage (CSE Department): {overall_percentage:.2f}%**")
+
+    # Pie chart
+    fig, ax = plt.subplots()
+    ax.pie([total_pass, total_fail], labels=["Pass", "Fail"], autopct="%1.1f%%", colors=["green", "red"])
+    ax.set_title("Overall Pass vs Fail (CSE Department)")
+    st.pyplot(fig)
+
 with Students_Result_viewer:
     st.subheader("Student Result")
     st.info("🔒 Coming soon")
