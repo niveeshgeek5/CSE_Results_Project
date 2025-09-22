@@ -80,9 +80,6 @@ plt.rcParams["axes.labelcolor"] = "#e0e0e0"
 plt.rcParams["xtick.color"] = "#aaaaaa"
 plt.rcParams["ytick.color"] = "#aaaaaa"
 plt.rcParams["text.color"]  = "#f0f0f0"
-# ----------------------
-# Load data
-# ----------------------
 # Batch 23 (Sem 4)
 df23 = pd.read_csv("Sem4_Results_820423.csv")
 df23.replace("UA", "U", inplace=True)
@@ -102,11 +99,11 @@ df22.replace("UA", "U", inplace=True)
 st.title("📊 CSE Department April-2025 Results")
 
 # Tabs for batches
-batch24, batch23, batch22, batch21,Overall, Students_Result_viewer= st.tabs(["2", "Batch 23", "Batch 22", "Batch 21","Overall","Students Result viewer"])
+batch24, batch23, batch22, batch21,Overall, Students_Result_viewer= st.tabs(["Batch 24", "Batch 23", "Batch 22", "Batch 21","Overall","Students Result viewer"])
 
-# ----------------------
+
 # Subject mapping
-# ----------------------
+
 subject_map_sem4 = {
     "CS3401": "Algorithms",
     "CS3451": "Introduction to Operating Systems",
