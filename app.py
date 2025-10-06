@@ -418,7 +418,7 @@ with Students_Result_viewer:
     import pandas as pd
     import matplotlib.pyplot as plt
 
-    st.subheader("Student Result")
+    
 
     df = pd.read_csv("CSE_Sem2_Batch24.csv")
 
@@ -435,7 +435,7 @@ with Students_Result_viewer:
         grade_values = [grade_order.index(g) for g in grades]
 
         fig, ax = plt.subplots(figsize=(10, 5))
-        ax.bar(subjects, grade_values, color="skyblue", edgecolor="black")
+        ax.bar(subjects, grade_values, color="red", edgecolor="black")
         ax.set_xticklabels(subjects, rotation=45, ha='right')
         ax.set_yticks(range(len(grade_order)))
         ax.set_yticklabels(grade_order)
