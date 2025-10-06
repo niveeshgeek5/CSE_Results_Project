@@ -422,7 +422,7 @@ with Students_Result_viewer:
 
     df = pd.read_csv("CSE_Sem2_Batch24.csv")
 
-    regno = st.number_input("Enter Register Number")#min_value=1, step=1
+    regno = st.number_input("Enter Register Number",min_value=1, step=1)
 
     if regno:
       student = df[df["Reg No"] == regno]
