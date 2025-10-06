@@ -147,46 +147,6 @@ subject_map_sem8 = {
 # Grade order for visualization
 grade_order = ["O", "A+", "A", "B+", "B", "C", "U"]
 
-# ----------------------
-# Batch 23 (Sem 4)
-# ----------------------
-with batch23:
-    st.subheader("Semester 4 Results - Batch 23")
-
-    # Keep only valid subjects
-    subjects = [sub for sub in subject_map_sem4.keys() if sub in df23.columns]
-
-    # Subject-wise grade distribution
-    st.header("📚 Subject-wise Grade Distribution")
-    for subject in subjects:
-        grade_counts = df23[subject].value_counts().reindex(grade_order, fill_value=0)
-
-        fig, ax = plt.subplots()
-        grade_counts.plot(kind="bar", ax=ax)
-        ax.set_title(f"{subject} – {subject_map_sem4[subject]}")
-        ax.set_ylabel("Number of Students")
-        st.pyplot(fig)
-
-        # Summary
-        total = grade_counts.sum()
-        fails = grade_counts["U"]
-        passes = total - fails
-        st.write(f"*Summary:* {subject} – {subject_map_sem4[subject]} → "
-                 f"Pass: {passes}, Fail: {fails}, Most common grade: {grade_counts.idxmax()}")
-
-    # Pass vs Fail Visualization
-    st.header("✅ Pass vs Fail Analysis")
-    df23["Result"] = df23[subjects].apply(lambda row: "Pass" if "U" not in row.values else "Fail", axis=1)
-    pass_fail_counts = df23["Result"].value_counts()
-
-    fig, ax = plt.subplots()
-    pass_fail_counts.plot(kind="pie", autopct='%1.1f%%', ax=ax, colors=["green", "red"])
-    ax.set_ylabel("")
-    ax.set_title("Pass vs Fail (Batch 23 - Sem 4)")
-    st.pyplot(fig)
-
-    st.write(f"*Summary:* Out of {len(df23)} students → "
-             f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
 
 # ----------------------
 # Batch 24 (Sem 2)
@@ -228,6 +188,47 @@ with batch24:
 
     st.write(f"*Summary:* Out of {len(df24)} students → "
              f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
+# ----------------------
+# Batch 23 (Sem 4)
+# ----------------------
+with batch23:
+    st.subheader("Semester 4 Results - Batch 23")
+
+    # Keep only valid subjects
+    subjects = [sub for sub in subject_map_sem4.keys() if sub in df23.columns]
+
+    # Subject-wise grade distribution
+    st.header("📚 Subject-wise Grade Distribution")
+    for subject in subjects:
+        grade_counts = df23[subject].value_counts().reindex(grade_order, fill_value=0)
+
+        fig, ax = plt.subplots()
+        grade_counts.plot(kind="bar", ax=ax)
+        ax.set_title(f"{subject} – {subject_map_sem4[subject]}")
+        ax.set_ylabel("Number of Students")
+        st.pyplot(fig)
+
+        # Summary
+        total = grade_counts.sum()
+        fails = grade_counts["U"]
+        passes = total - fails
+        st.write(f"*Summary:* {subject} – {subject_map_sem4[subject]} → "
+                 f"Pass: {passes}, Fail: {fails}, Most common grade: {grade_counts.idxmax()}")
+
+    # Pass vs Fail Visualization
+    st.header("✅ Pass vs Fail Analysis")
+    df23["Result"] = df23[subjects].apply(lambda row: "Pass" if "U" not in row.values else "Fail", axis=1)
+    pass_fail_counts = df23["Result"].value_counts()
+
+    fig, ax = plt.subplots()
+    pass_fail_counts.plot(kind="pie", autopct='%1.1f%%', ax=ax, colors=["green", "red"])
+    ax.set_ylabel("")
+    ax.set_title("Pass vs Fail (Batch 23 - Sem 4)")
+    st.pyplot(fig)
+
+    st.write(f"*Summary:* Out of {len(df23)} students → "
+             f"{pass_fail_counts.get('Pass', 0)} Passed, {pass_fail_counts.get('Fail', 0)} Failed.")
+
 
 # ----------------------
 # Batch 22 (Sem 6)
