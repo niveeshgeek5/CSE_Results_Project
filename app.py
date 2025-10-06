@@ -414,5 +414,36 @@ with Overall:
 
 with Students_Result_viewer:
     st.subheader("Student Result")
-    st.info("🔒 Coming soon")
+    import streamlit as st
+    import pandas as pd
+    import matplotlib.pyplot as plt
+
+    st.subheader("Student Result")
+
+    df = pd.read_csv("CSE_Sem2_Batch24.csv")
+
+    regno = st.number_input("Enter Register Number", min_value=1, step=1)
+
+    if regno:
+      student = df[df["Reg No"] == regno]
+    if student.empty:
+        st.error("No student found.")
+    else:
+        subjects = df.columns[2:]
+        grades = student.iloc[0, 2:].tolist()
+        grade_order = ["U", "C", "B", "B+", "A", "A+", "O"]
+        grade_values = [grade_order.index(g) for g in grades]
+
+        fig, ax = plt.subplots(figsize=(10, 5))
+        ax.bar(subjects, grade_values, color="skyblue", edgecolor="black")
+        ax.set_xticklabels(subjects, rotation=45, ha='right')
+        ax.set_yticks(range(len(grade_order)))
+        ax.set_yticklabels(grade_order)
+        ax.set_title(f"Grades for {student.iloc[0,1]} ({regno})")
+        ax.set_xlabel("Subjects")
+        ax.set_ylabel("Grades")
+        st.pyplot(fig)
+#else:
+    #st.info("🔒 Coming soon")
+
  
